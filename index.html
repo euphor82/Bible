@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Book by Book — Bible Study Companion</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Book by Book">
+<meta name="theme-color" content="#22201C">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACOUlEQVR4nO3dsW3CUBRA0RBlDArkIbJLZqBnCHpmyC4ZgllSpItyFbDi+APn1EZ6xdWj4CFvpt32CX7yvPYAjEscJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcpJernj4dpoXm4N/sj+cLn7Q5SNdtji+Xp8dQrl38NgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdpzj/ebt378XXeB98OH387yeBsDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SIO+UmP2Wy8WtdxUY76sw+YgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYM06Jngomdzs6/9xjzmW47NQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZAGPTBe1KPdCc9mc5DEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZBu4FfZ02Fae4RF7I/ntUf4hc1BEgfpBr5Wxl+/98rmIImDJA6SOEjiIImDJA6SOEjiIImDJA6SOEjiIImDJA6SOEhzjn3u9aiTb2wO0mbabdeegUHZHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHKRPNoAbzoVRq5oAAAAASUVORK5CYII=">
+<style>
+  :root{
+    --ink:#22201C; --paper:#FBF9F4; --card:#FFFFFF; --gold:#A98A38; --gilt:#C0A24A;
+    --muted:#6E685C; --line:#E9E3D6; --ink-soft:#3A3730;
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--sans); color:var(--ink); background:var(--paper);
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .wrap{max-width:680px;margin:0 auto}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:20;background:rgba(251,249,244,.94);
+    backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid var(--line);
+    padding:calc(env(safe-area-inset-top) + 10px) 16px 8px;
+  }
+  .brand{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+  .brand .ic{width:34px;height:34px;border-radius:8px;flex:0 0 auto;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .brand h1{font-family:var(--serif);font-size:20px;font-weight:700;margin:0;letter-spacing:.2px}
+  .brand p{margin:0;font-size:11.5px;color:var(--muted);letter-spacing:.3px}
+
+  .progress{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .bar{flex:1;height:6px;background:#EDE7DA;border-radius:99px;overflow:hidden}
+  .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gilt));border-radius:99px;transition:width .35s ease}
+  .progress b{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.3px;white-space:nowrap}
+
+  .searchrow{position:relative;margin-bottom:10px}
+  .searchrow input{
+    width:100%;padding:11px 38px 11px 38px;border:1px solid var(--line);border-radius:11px;
+    background:#fff;font-size:16px;color:var(--ink);outline:none;
+  }
+  .searchrow input:focus{border-color:var(--gilt);box-shadow:0 0 0 3px rgba(192,162,74,.16)}
+  .searchrow .mag{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px}
+  .searchrow .clr{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:20px;width:26px;height:26px;display:none;align-items:center;justify-content:center;border-radius:50%}
+  .searchrow.has .clr{display:flex}
+
+  .seg{display:flex;gap:6px;margin-bottom:10px}
+  .seg button{flex:1;padding:8px 0;font-size:13px;font-weight:600;color:var(--muted);border-radius:9px;border:1px solid var(--line);background:#fff;letter-spacing:.2px}
+  .seg button.on{color:#fff;background:var(--ink);border-color:var(--ink)}
+
+  .chips{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .chips button{padding:6px 13px;font-size:12.5px;font-weight:600;color:var(--ink-soft);border:1px solid var(--line);border-radius:99px;background:#fff;white-space:nowrap}
+  .chips button.on{background:rgba(169,138,56,.12);border-color:var(--gilt);color:#7d6624}
+
+  /* ---------- Content ---------- */
+  main{padding:6px 16px 60px}
+  .tlabel{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin:22px 2px 4px}
+  .tsub{font-size:12px;color:var(--muted);margin:0 2px 10px;font-style:italic}
+
+  /* group accordion */
+  .group{border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:9px;overflow:hidden}
+  .ghead{width:100%;display:flex;align-items:center;gap:10px;padding:14px 14px;text-align:left}
+  .ghead .gname{font-family:var(--serif);font-size:16.5px;font-weight:700;flex:1}
+  .ghead .gmeta{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.3px}
+  .ghead .chev{color:var(--gold);font-size:13px;transition:transform .25s ease;flex:0 0 auto}
+  .group.open .ghead .chev{transform:rotate(90deg)}
+  .gdot{width:7px;height:7px;border-radius:50%;background:var(--gilt);flex:0 0 auto;opacity:0}
+  .group.done .gdot{opacity:1}
+
+  .gbody{max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .group.open .gbody{max-height:none}
+
+  /* book row */
+  .book{border-top:1px solid var(--line)}
+  .brow{width:100%;display:flex;align-items:center;gap:9px;padding:12px 14px 12px 16px;text-align:left}
+  .brow .bname{font-family:var(--serif);font-size:15.5px;flex:1}
+  .brow .badge{font-size:13px;flex:0 0 auto;line-height:1}
+  .brow .badge.rib{color:var(--gold)}
+  .brow .badge.rd{color:var(--gilt)}
+  .brow .chev{color:#C9C2B2;font-size:12px;transition:transform .25s ease}
+  .book.open .brow .chev{transform:rotate(90deg)}
+  .book.read .bname{color:var(--muted)}
+
+  .bdetail{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FFFDF8}
+  .book.open .bdetail{max-height:none}
+  .bpad{padding:4px 16px 18px}
+  .author{font-size:12.5px;color:var(--muted);font-style:italic;margin:0 0 10px}
+  .author b{color:var(--gold);font-style:italic}
+  .summary{font-size:15px;margin:0 0 14px;color:var(--ink-soft)}
+
+  .lab{font-size:10.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--gold);margin:0 0 4px}
+  .verse{border-left:3px solid var(--gold);padding:2px 0 2px 12px;margin:0 0 14px}
+  .verse .q{font-family:var(--serif);font-style:italic;font-size:15.5px;color:var(--ink-soft)}
+  .verse .ref{display:block;margin-top:3px;font-size:11.5px;font-weight:700;color:var(--gold);letter-spacing:.4px}
+  .block{margin:0 0 14px}
+  .block p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+  .chars{list-style:none;padding:0;margin:0 0 4px}
+  .chars li{position:relative;padding:3px 0 3px 16px;font-size:14.5px;color:var(--ink-soft)}
+  .chars li::before{content:'';position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--gilt)}
+  .chars li b{color:var(--ink)}
+
+  .actions{display:flex;gap:8px;margin-top:14px}
+  .actions button{flex:1;padding:10px 0;font-size:13px;font-weight:700;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink-soft);letter-spacing:.2px}
+  .actions button.act{background:rgba(169,138,56,.13);border-color:var(--gilt);color:#7d6624}
+  .navbtns{display:flex;justify-content:space-between;margin-top:12px}
+  .navbtns button{font-size:12.5px;font-weight:600;color:var(--gold);padding:6px 4px}
+  .navbtns button:disabled{color:#CFC8B8}
+
+  .empty{text-align:center;color:var(--muted);font-size:14px;padding:50px 20px}
+  .empty .big{font-family:var(--serif);font-size:19px;color:var(--ink);margin-bottom:6px}
+
+  /* ---------- Timeline ---------- */
+  .tlintro{font-size:13px;color:var(--muted);font-style:italic;margin:16px 2px 18px}
+  .tl{position:relative;padding-left:26px;margin:0}
+  .tl::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--gilt),var(--line))}
+  .era{position:relative;margin-bottom:22px}
+  .era::before{content:'';position:absolute;left:-24px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--gold)}
+  .era .d{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--gold)}
+  .era .e{font-family:var(--serif);font-size:17px;font-weight:700;margin:1px 0 4px}
+  .era .x{font-size:14px;color:var(--ink-soft);margin:0}
+
+  /* ---------- About ---------- */
+  .about h2{font-family:var(--serif);font-size:20px;margin:18px 0 10px}
+  .about p{font-size:14.5px;color:var(--ink-soft);margin:0 0 13px}
+  .about .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:6px 0 16px}
+  .about .stat b{font-family:var(--serif);font-size:15px}
+  .reset{width:100%;padding:11px 0;font-size:13px;font-weight:700;color:#8a3a2e;border:1px solid #E7CFC7;border-radius:10px;background:#fff}
+  .tip{background:rgba(169,138,56,.09);border:1px solid #EBE0C4;border-radius:12px;padding:13px 15px;margin:4px 0 16px}
+  .tip b{font-family:var(--serif)}
+  .tip p{font-size:13px;color:var(--ink-soft);margin:6px 0 0}
+
+  .foot{text-align:center;font-size:11px;color:#B7AF9E;padding:8px 0 24px}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img class="ic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACOUlEQVR4nO3dsW3CUBRA0RBlDArkIbJLZqBnCHpmyC4ZgllSpItyFbDi+APn1EZ6xdWj4CFvpt32CX7yvPYAjEscJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcpJernj4dpoXm4N/sj+cLn7Q5SNdtji+Xp8dQrl38NgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdpzj/ebt378XXeB98OH387yeBsDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SIO+UmP2Wy8WtdxUY76sw+YgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYM06Jngomdzs6/9xjzmW47NQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZAGPTBe1KPdCc9mc5DEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZBu4FfZ02Fae4RF7I/ntUf4hc1BEgfpBr5Wxl+/98rmIImDJA6SOEjiIImDJA6SOEjiIImDJA6SOEjiIImDJA6SOEhzjn3u9aiTb2wO0mbabdeegUHZHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHKRPNoAbzoVRq5oAAAAASUVORK5CYII=" alt="">
+      <div>
+        <h1>Book by Book</h1>
+        <p>A Bible study companion &middot; 66 books</p>
+      </div>
+    </div>
+    <div class="progress">
+      <div class="bar"><i id="barFill"></i></div>
+      <b id="progText">0 of 66 read</b>
+    </div>
+    <div class="searchrow" id="searchRow">
+      <span class="mag">&#9906;</span>
+      <input id="q" type="search" placeholder="Search a book, person, or theme" autocomplete="off" autocapitalize="none" spellcheck="false">
+      <button class="clr" id="clr" aria-label="Clear">&times;</button>
+    </div>
+    <div class="seg" id="seg">
+      <button data-view="books" class="on">Books</button>
+      <button data-view="timeline">Timeline</button>
+      <button data-view="about">About</button>
+    </div>
+    <div class="chips" id="chips">
+      <button data-filter="all" class="on">All</button>
+      <button data-filter="ot">Old Testament</button>
+      <button data-filter="nt">New Testament</button>
+      <button data-filter="saved">&#9873; Saved</button>
+      <button data-filter="unread">Unread</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="view-books"></div>
+    <div id="view-timeline" hidden></div>
+    <div id="view-about" hidden></div>
+    <div class="foot">Look up the full wording of each verse in your own Bible.</div>
+  </main>
+</div>
+
+<script>
+const DATA = {"testaments":[{"id":"ot","title":"Old Testament","subtitle":"39 books — Creation, covenant, and the promise of a Redeemer","groups":[{"name":"The Pentateuch (The Law)","books":[{"name":"Genesis","author":"Moses (traditional attribution)","summary":"The book of origins — of the universe, humanity, sin, and God's covenant people. God creates the world and mankind, who fall into sin; the story runs through Noah's flood and the tower of Babel, then narrows to the patriarchs — Abraham, Isaac, Jacob, and Joseph — through whom God promises to bless all nations. It closes with Israel settled in Egypt.","verse":{"ref":"Genesis 1:1","text":"In the beginning, God created the heavens and the earth."},"point":"God is the sovereign Creator who begins His plan to redeem a fallen world through a chosen family.","christ":"The promised offspring of the woman who will crush the serpent (3:15), and the seed of Abraham in whom all nations are blessed.","chars":[{"n":"Adam & Eve","d":"the first humans, who disobeyed God and brought sin into the world"},{"n":"Noah","d":"built the ark and, with his family, survived the flood"},{"n":"Abraham","d":"was called by God and became the father of the faithful"},{"n":"Isaac","d":"the promised son through whom the covenant continued"},{"n":"Jacob (Israel)","d":"fathered the twelve tribes and wrestled with God"},{"n":"Joseph","d":"was sold into Egypt, rose to power, and saved his family from famine"}]},{"name":"Exodus","author":"Moses (traditional attribution)","summary":"God rescues Israel from slavery in Egypt through Moses, humbling Pharaoh with ten plagues and parting the Red Sea. At Mount Sinai He gives the Ten Commandments and the Law, and detailed instructions for the tabernacle, the tent where His presence will dwell among His people.","verse":{"ref":"Exodus 6:7","text":"I will take you to be my people, and I will be your God."},"point":"God redeems His people from slavery and binds Himself to them by covenant and by His presence.","christ":"The Passover Lamb whose blood shields from death, and the deliverer who leads His people out of slavery.","chars":[{"n":"Moses","d":"led Israel out of Egypt and received the Law at Sinai"},{"n":"Aaron","d":"Moses' brother, his spokesman and Israel's first high priest"},{"n":"Pharaoh","d":"resisted God and hardened his heart against Israel"},{"n":"Miriam","d":"Moses' sister and a prophetess who led Israel in song"}]},{"name":"Leviticus","author":"Moses (traditional attribution)","summary":"A manual of holiness: laws for sacrifices, the priesthood, purity, and festivals, teaching a sinful people how to live near a holy God. Its heartbeat is the command, “Be holy, for I am holy.”","verse":{"ref":"Leviticus 19:2","text":"You shall be holy, for I the Lord your God am holy."},"point":"A holy God makes a way for sinful people to approach Him through sacrifice and holy living.","christ":"The spotless, once-for-all sacrifice and the great High Priest who makes atonement for sin.","chars":[{"n":"Moses","d":"received and delivered the laws of worship"},{"n":"Aaron & his sons","d":"consecrated as Israel's priests"},{"n":"Nadab & Abihu","d":"offered unauthorized fire before God and were struck dead"}]},{"name":"Numbers","author":"Moses (traditional attribution)","summary":"Israel's forty years of wilderness wandering. After the people are counted (“numbered”), they refuse to enter the Promised Land out of fear, and an entire generation dies in the desert. A book of grumbling, rebellion, and God's patient provision.","verse":{"ref":"Numbers 6:24","text":"The Lord bless you and keep you."},"point":"Unbelief and disobedience cost a generation the Promised Land, yet God faithfully leads and provides.","christ":"The bronze serpent lifted up so that all who look may live (John 3:14), and the rock that gives living water.","chars":[{"n":"Moses","d":"shepherded a rebellious people through the wilderness"},{"n":"Joshua & Caleb","d":"the two faithful spies who trusted God"},{"n":"Balaam","d":"a pagan prophet whose donkey spoke to rebuke him"},{"n":"Korah","d":"led a rebellion against Moses and was swallowed by the earth"}]},{"name":"Deuteronomy","author":"Moses (traditional attribution)","summary":"Moses' farewell sermons on the edge of the Promised Land, restating the Law for a new generation and calling them to love and obey God with all their heart. He sets before them life and death and pleads, “Choose life.” Moses dies within sight of Canaan.","verse":{"ref":"Deuteronomy 6:5","text":"You shall love the Lord your God with all your heart."},"point":"Wholehearted love and obedience are the right response to God's covenant love — so choose life.","christ":"The Prophet greater than Moses whom God promised to raise up and to whom we must listen (18:15).","chars":[{"n":"Moses","d":"delivered his final speeches and died on Mount Nebo"},{"n":"Joshua","d":"commissioned as Moses' successor"}]}]},{"name":"The Historical Books","books":[{"name":"Joshua","author":"Joshua (traditional; the book is anonymous)","summary":"Israel enters and conquers the Promised Land under Joshua. The walls of Jericho fall, the land is divided among the twelve tribes, and Joshua challenges the people to choose whom they will serve.","verse":{"ref":"Joshua 1:9","text":"Be strong and courageous… the Lord your God is with you."},"point":"God keeps His promise, giving the land to His people as they trust and obey Him.","christ":"Jesus, who shares Joshua's name, leads His people into their true inheritance and rest.","chars":[{"n":"Joshua","d":"led the conquest and division of Canaan"},{"n":"Rahab","d":"a Canaanite woman who hid the Israelite spies and was spared"},{"n":"Achan","d":"secretly kept plunder and brought defeat on Israel"},{"n":"Caleb","d":"claimed his mountain inheritance at eighty-five"}]},{"name":"Judges","author":"Samuel (traditional; the book is anonymous)","summary":"A dark, repeating cycle: Israel sins, is oppressed by enemies, cries out, and God raises up a “judge” (deliverer) to rescue them — over and over. The refrain: “Everyone did what was right in his own eyes.”","verse":{"ref":"Judges 21:25","text":"Everyone did what was right in his own eyes."},"point":"When people abandon God as king, they spiral into chaos — yet He keeps raising up deliverers.","christ":"The perfect Judge and Deliverer who saves once for all, unlike the flawed rescuers of the era.","chars":[{"n":"Deborah","d":"a prophetess and judge who led Israel to victory"},{"n":"Gideon","d":"defeated Midian with just 300 men"},{"n":"Samson","d":"a strong man undone by his weakness for Delilah"},{"n":"Delilah","d":"betrayed Samson to the Philistines"}]},{"name":"Ruth","author":"Samuel (traditional; the book is anonymous)","summary":"A tender story of loyalty and redemption set during the judges. Ruth, a Moabite widow, clings to her mother-in-law Naomi and to Israel's God, and is redeemed in marriage by Boaz — becoming the great-grandmother of King David.","verse":{"ref":"Ruth 1:16","text":"Your people shall be my people, and your God my God."},"point":"God quietly works through loyal love and ordinary faithfulness to redeem and to build David's line.","christ":"The kinsman-redeemer, pictured in Boaz, who pays the price to claim His bride.","chars":[{"n":"Ruth","d":"a loyal widow who chose Naomi's people and God"},{"n":"Naomi","d":"returned home bitter and was restored"},{"n":"Boaz","d":"the kinsman-redeemer who married Ruth"}]},{"name":"1 Samuel","author":"Anonymous (traditionally Samuel, Nathan, and Gad)","summary":"Israel transitions from judges to kings. Samuel anoints Saul as the first king, but Saul's disobedience leads to his rejection; young David is anointed, famously kills Goliath, and rises in favor as a jealous Saul hunts him.","verse":{"ref":"1 Samuel 16:7","text":"The Lord looks on the heart."},"point":"God, not the people's demand for a king, truly rules — and He chooses leaders by the heart.","christ":"The true anointed King after God's own heart, foreshadowed by the shepherd David.","chars":[{"n":"Samuel","d":"the last judge and prophet who anointed the first kings"},{"n":"Saul","d":"Israel's first king, who fell through disobedience"},{"n":"David","d":"the shepherd anointed king, who slew the giant Goliath"},{"n":"Goliath","d":"the Philistine giant defeated by David"},{"n":"Jonathan","d":"Saul's son and David's devoted friend"}]},{"name":"2 Samuel","author":"Anonymous (traditionally attributed to the same prophetic sources)","summary":"The reign of David — his triumphs and his failures. He unites Israel and receives God's promise of an everlasting dynasty, but his sin with Bathsheba brings tragedy and turmoil crashing into his own household.","verse":{"ref":"2 Samuel 7:16","text":"Your throne shall be established forever."},"point":"God establishes an everlasting dynasty through David, even amid his sin and its consequences.","christ":"The Son of David whose throne, promised forever, is established in Christ the eternal King.","chars":[{"n":"David","d":"reigned as Israel's greatest king, yet stumbled gravely"},{"n":"Bathsheba","d":"the woman David sinned with, later mother of Solomon"},{"n":"Nathan","d":"the prophet who boldly confronted David"},{"n":"Absalom","d":"David's son who rebelled and seized the throne"}]},{"name":"1 Kings","author":"Anonymous (traditionally Jeremiah)","summary":"Solomon builds the temple and reigns in wisdom and splendor, but his idolatry splits the kingdom after his death into Israel (north) and Judah (south). The prophet Elijah rises to confront the wicked King Ahab.","verse":{"ref":"1 Kings 18:21","text":"How long will you go limping between two opinions?"},"point":"Idolatry divides and weakens the kingdom, but God still speaks through faithful prophets.","christ":"The one greater than Solomon — the true King, wisdom, and temple of God.","chars":[{"n":"Solomon","d":"built the temple and reigned in unmatched wisdom"},{"n":"Elijah","d":"the fearless prophet who challenged Baal on Mount Carmel"},{"n":"Ahab","d":"an evil king of Israel"},{"n":"Jezebel","d":"Ahab's idolatrous, murderous queen"}]},{"name":"2 Kings","author":"Anonymous (traditionally Jeremiah)","summary":"The long decline and fall of both kingdoms. Prophets warn; kings mostly ignore them. Israel falls to Assyria and Judah to Babylon, ending in exile — though a few good kings shine briefly.","verse":{"ref":"2 Kings 17:13","text":"Turn from your evil ways."},"point":"Persistent sin brings the promised judgment of exile, exactly as the prophets warned.","christ":"The faithful Prophet and King who never fails where earthly kings fell into sin.","chars":[{"n":"Elisha","d":"Elijah's successor, who worked many miracles"},{"n":"Hezekiah","d":"a faithful king spared from Assyria"},{"n":"Josiah","d":"rediscovered the Law and led sweeping reforms"},{"n":"Naaman","d":"an Aramean commander healed of leprosy"}]},{"name":"1 Chronicles","author":"Anonymous (traditionally Ezra, “the Chronicler”)","summary":"A priestly retelling of Israel's story from Adam through David, rich in genealogies, emphasizing worship, the ark, and David's preparations for the temple.","verse":{"ref":"1 Chronicles 16:34","text":"Give thanks to the Lord, for he is good."},"point":"God's covenant with David anchors true worship at the center of the nation's life.","christ":"The everlasting King of David's line, at the center of God's true worship.","chars":[{"n":"David","d":"the central figure, who organized worship and prepared for the temple"},{"n":"Solomon","d":"chosen to build the house of God"}]},{"name":"2 Chronicles","author":"Anonymous (traditionally Ezra, “the Chronicler”)","summary":"From Solomon's temple to the Babylonian exile, focusing on Judah's kings and the temple, and ending on a note of hope as Cyrus permits the Jews to return home.","verse":{"ref":"2 Chronicles 7:14","text":"If my people… humble themselves… I will heal their land."},"point":"Wholehearted worship matters; humility and repentance open the door to God's restoration.","christ":"The true and greater temple, where God comes to dwell with His people.","chars":[{"n":"Solomon","d":"built and dedicated the temple"},{"n":"Hezekiah & Josiah","d":"reforming kings who renewed true worship"}]},{"name":"Ezra","author":"Ezra (traditional attribution)","summary":"The return from exile. Under Persian decree the Jews rebuild the temple in Jerusalem, and Ezra the scribe later leads a spiritual renewal, calling the people back to the Law.","verse":{"ref":"Ezra 7:10","text":"Ezra had set his heart to study the Law of the Lord."},"point":"God restores His people from exile, rebuilding both the temple and their devotion to His Word.","christ":"The one who restores and rebuilds His people, renewing them by His Word.","chars":[{"n":"Ezra","d":"the priest-scribe who taught and reformed the people"},{"n":"Zerubbabel","d":"led the first return and rebuilt the temple"},{"n":"Cyrus","d":"the Persian king who freed the exiles"}]},{"name":"Nehemiah","author":"Nehemiah (his memoirs; traditional attribution)","summary":"Nehemiah, cupbearer to the Persian king, returns to rebuild Jerusalem's broken walls in just fifty-two days despite fierce opposition, then joins Ezra in renewing the people's covenant with God.","verse":{"ref":"Nehemiah 8:10","text":"The joy of the Lord is your strength."},"point":"With prayer, courage, and God's help, His people rebuild what was broken and renew their covenant.","christ":"The restorer who rebuilds what sin has broken down and secures His people.","chars":[{"n":"Nehemiah","d":"rebuilt the walls and governed with integrity"},{"n":"Ezra","d":"read and explained the Law to the people"},{"n":"Sanballat & Tobiah","d":"opponents who tried to stop the work"}]},{"name":"Esther","author":"Anonymous (traditionally Mordecai)","summary":"In the Persian court, a Jewish orphan named Esther becomes queen and courageously risks her life to save her people from genocide. God's name never appears in the book, yet His providence is everywhere. It gives the origin of the feast of Purim.","verse":{"ref":"Esther 4:14","text":"…for such a time as this."},"point":"God's unseen providence protects His people, positioning the faithful to act with courage.","christ":"The unseen providence that rescues His people, and the advocate who saves at the risk of His own life.","chars":[{"n":"Esther","d":"the queen who risked death to save the Jews"},{"n":"Mordecai","d":"Esther's cousin who raised her and exposed a plot"},{"n":"Haman","d":"the villain who schemed to destroy the Jews"},{"n":"King Ahasuerus","d":"the Persian king (Xerxes)"}]}]},{"name":"The Books of Wisdom & Poetry","books":[{"name":"Job","author":"Anonymous (author unknown)","summary":"A blameless man loses everything in a heavenly test and wrestles with the agonizing question of why the righteous suffer. His friends offer confident but wrong answers; in the end God responds not with explanations but with Himself, and restores Job.","verse":{"ref":"Job 19:25","text":"I know that my Redeemer lives."},"point":"God is trustworthy and sovereign even when suffering makes no sense; faith trusts without full answers.","christ":"The living Redeemer (19:25) and the Mediator who stands between God and suffering man.","chars":[{"n":"Job","d":"suffered profound loss yet held onto faith"},{"n":"Eliphaz, Bildad & Zophar","d":"three friends who wrongly blamed his sin"},{"n":"Elihu","d":"a younger man who spoke last before God"},{"n":"Satan","d":"the accuser permitted to test Job"}]},{"name":"Psalms","author":"David and others (a collection of many authors)","summary":"Israel's songbook and prayer book — 150 poems of praise, lament, thanksgiving, and trust that span the full range of human emotion before God, from “The Lord is my shepherd” to raw cries of despair and shouts of joy.","verse":{"ref":"Psalm 23:1","text":"The Lord is my shepherd; I shall not want."},"point":"In every season, God's people bring their whole hearts — praise and pain alike — honestly before Him.","christ":"The suffering and reigning Messiah — crucified in Psalm 22, enthroned in Psalm 110, the anointed Son of Psalm 2.","chars":[{"n":"David","d":"the chief author of the Psalms"},{"n":"Asaph & the Sons of Korah","d":"temple worship leaders who contributed psalms"},{"n":"Moses & Solomon","d":"credited with individual psalms"}]},{"name":"Proverbs","author":"Solomon (primary), with Agur and Lemuel","summary":"Practical wisdom for everyday life — pithy sayings on speech, work, money, friendship, and character — all rooted in the truth that “the fear of the Lord is the beginning of knowledge.”","verse":{"ref":"Proverbs 1:7","text":"The fear of the Lord is the beginning of knowledge."},"point":"True wisdom for daily life begins with reverence for God and shows up in practical righteousness.","christ":"The very wisdom of God, who has become our wisdom, righteousness, and redemption.","chars":[{"n":"Solomon","d":"the primary author, Israel's wisest king"},{"n":"Lady Wisdom & Folly","d":"personified as rival women calling out to the young"},{"n":"Agur & King Lemuel","d":"contributors of the closing chapters"}]},{"name":"Ecclesiastes","author":"“The Preacher” (Qoheleth), traditionally Solomon","summary":"A brutally honest search for meaning “under the sun.” Wealth, pleasure, work, and even wisdom prove fleeting (“vanity”) apart from God. The conclusion: fear God and keep His commandments, for that is the whole duty of man.","verse":{"ref":"Ecclesiastes 12:13","text":"Fear God and keep his commandments; this is the whole duty of man."},"point":"Life apart from God is fleeting and empty; meaning is found in reverent trust and enjoying His gifts.","christ":"The one who gives lasting meaning that nothing “under the sun” can supply.","chars":[{"n":"The Preacher (Qoheleth)","d":"the reflective seeker, traditionally Solomon"}]},{"name":"Song of Solomon","author":"Solomon","summary":"A lush poetic celebration of romantic and marital love between a bride and her beloved — often also read as a picture of the love between God and His people.","verse":{"ref":"Song of Solomon 8:6","text":"Love is strong as death."},"point":"Romantic love within marriage is a good and beautiful gift, echoing covenant devotion.","christ":"The Bridegroom who loves and delights in His bride, the church.","chars":[{"n":"The Beloved (bride)","d":"the young woman in love"},{"n":"The Lover (bridegroom)","d":"her beloved, traditionally Solomon"}]}]},{"name":"The Major Prophets","books":[{"name":"Isaiah","author":"Isaiah, son of Amoz","summary":"The “gospel prophet.” Isaiah warns Judah of judgment for sin but soars into breathtaking promises of comfort, a coming Messiah, the Suffering Servant who bears our sins (chapter 53), and a renewed creation.","verse":{"ref":"Isaiah 53:5","text":"With his wounds we are healed."},"point":"God will judge sin but save His people through a coming Suffering Servant and King.","christ":"Immanuel (7:14), the Prince of Peace (9:6), and the Suffering Servant pierced for our sins (ch. 53).","chars":[{"n":"Isaiah","d":"the prophet with a vision of God's holiness and salvation"},{"n":"King Hezekiah","d":"the faithful king Isaiah counseled"},{"n":"King Ahaz","d":"the faithless king who rejected God's sign"}]},{"name":"Jeremiah","author":"Jeremiah (with his scribe Baruch)","summary":"The “weeping prophet” pleads for decades with Judah to repent before Babylon destroys Jerusalem. Rejected and persecuted, he still promises a future “new covenant” that God will write on the human heart.","verse":{"ref":"Jeremiah 29:11","text":"I know the plans I have for you, declares the Lord."},"point":"Judgment is certain for stubborn sin, yet God promises a new covenant written on the heart.","christ":"The righteous Branch and the Mediator of the new covenant written on the heart (31:31).","chars":[{"n":"Jeremiah","d":"the sorrowful prophet who warned of exile"},{"n":"Baruch","d":"Jeremiah's faithful scribe"},{"n":"King Zedekiah","d":"the last king of Judah, who wavered"}]},{"name":"Lamentations","author":"Jeremiah (traditional attribution)","summary":"Five funeral poems mourning the destruction of Jerusalem. Raw, aching grief gives way to a flicker of hope: “His mercies…are new every morning; great is your faithfulness.”","verse":{"ref":"Lamentations 3:22–23","text":"His mercies… are new every morning; great is your faithfulness."},"point":"Even in the ruins of judgment, God's steadfast love and faithfulness give ground for hope.","christ":"The Man of Sorrows who weeps over the city, whose mercies are new every morning.","chars":[{"n":"Jeremiah","d":"the mourner weeping over the fallen city"},{"n":"Daughter Zion","d":"Jerusalem personified as a grieving woman"}]},{"name":"Ezekiel","author":"Ezekiel the priest","summary":"A priest-prophet among the exiles delivers dramatic visions and sign-acts — the valley of dry bones coming to life, God's glory departing and returning to the temple, and the promise of a new heart and a new spirit.","verse":{"ref":"Ezekiel 36:26","text":"I will give you a new heart, and a new spirit."},"point":"God's glory departs from a sinful people but will return; He promises inward renewal and revival.","christ":"The Good Shepherd who seeks the lost and gives His people a new heart and spirit (ch. 34, 36).","chars":[{"n":"Ezekiel","d":"the prophet of vivid visions among the exiles"},{"n":"The exiles","d":"the displaced people he was sent to warn and comfort"}]},{"name":"Daniel","author":"Daniel (traditional attribution)","summary":"Faithful Jews thrive in Babylonian exile without compromising their faith. Daniel and his friends survive the fiery furnace and the lions' den, and Daniel receives sweeping prophetic visions of future kingdoms and God's everlasting reign.","verse":{"ref":"Daniel 2:44","text":"The God of heaven will set up a kingdom that shall never be destroyed."},"point":"God is sovereign over every empire; the faithful can stand firm because His kingdom will win.","christ":"The Son of Man given an everlasting kingdom (7:13–14), and the fourth man in the fire.","chars":[{"n":"Daniel","d":"the wise interpreter of dreams, saved from the lions"},{"n":"Shadrach, Meshach & Abednego","d":"survived the fiery furnace"},{"n":"Nebuchadnezzar","d":"the Babylonian king humbled by God"},{"n":"Belshazzar","d":"saw the writing on the wall"}]}]},{"name":"The Minor Prophets","books":[{"name":"Hosea","author":"Hosea","summary":"God commands Hosea to marry an unfaithful wife as a living parable of Israel's spiritual adultery — and of God's relentless, redeeming love that keeps pursuing an unfaithful people.","verse":{"ref":"Hosea 6:6","text":"I desire steadfast love and not sacrifice."},"point":"Though His people are spiritually unfaithful, God's love relentlessly pursues and redeems them.","christ":"The faithful husband who redeems an unfaithful bride; “Out of Egypt I called my son” (11:1).","chars":[{"n":"Hosea","d":"the prophet whose marriage mirrored God's heart"},{"n":"Gomer","d":"his unfaithful wife, redeemed back"}]},{"name":"Joel","author":"Joel","summary":"A devastating locust plague becomes a warning of the coming “day of the Lord,” with an urgent call to repent and a promise that God will one day pour out His Spirit on all people.","verse":{"ref":"Joel 2:28","text":"I will pour out my Spirit on all flesh."},"point":"The day of the Lord calls for repentance now, and points ahead to God's Spirit poured out on all.","christ":"The one who pours out the Holy Spirit on all flesh, fulfilled at Pentecost.","chars":[{"n":"Joel","d":"the prophet who called Judah to repentance"}]},{"name":"Amos","author":"Amos","summary":"A shepherd-turned-prophet thunders against social injustice and empty religion in prosperous Israel: “Let justice roll down like waters, and righteousness like an ever-flowing stream.”","verse":{"ref":"Amos 5:24","text":"Let justice roll down like waters."},"point":"God rejects religion that ignores justice; real faith cares about the poor and the oppressed.","christ":"The one who raises up the fallen tent of David and restores it (9:11).","chars":[{"n":"Amos","d":"the herdsman-prophet who denounced injustice"},{"n":"Amaziah","d":"a priest who opposed him"}]},{"name":"Obadiah","author":"Obadiah","summary":"The Old Testament's shortest book — a single-chapter judgment against Edom for gloating over Jerusalem's fall, promising the proud will be brought low.","verse":{"ref":"Obadiah 1:15","text":"As you have done, it shall be done to you."},"point":"God humbles the proud; those who harm His people will face His justice.","christ":"The Deliverer on Mount Zion, whose is the coming kingdom.","chars":[{"n":"Obadiah","d":"the prophet with one message of judgment"},{"n":"Edom","d":"the nation condemned for pride and cruelty"}]},{"name":"Jonah","author":"Jonah (traditional; the narrative is anonymous)","summary":"A reluctant prophet flees God's call to preach to enemy Nineveh, is swallowed by a great fish, then obeys — only to sulk when the city actually repents. A vivid lesson in God's mercy reaching even Israel's enemies.","verse":{"ref":"Jonah 2:9","text":"Salvation belongs to the Lord!"},"point":"God's mercy reaches even our enemies, and He wants His people to share His heart for the lost.","christ":"The sign of Jonah — three days in the grave, then risen (Matthew 12:40).","chars":[{"n":"Jonah","d":"the runaway prophet swallowed by a great fish"},{"n":"The Ninevites","d":"enemies who repented at his preaching"},{"n":"The sailors","d":"pagan crew who came to fear the Lord"}]},{"name":"Micah","author":"Micah","summary":"Judgment and hope intertwined. Micah condemns corruption and injustice but foretells the Messiah's birth in Bethlehem and sums up true religion: “do justice, love kindness, and walk humbly with your God.”","verse":{"ref":"Micah 6:8","text":"Do justice, love kindness, and walk humbly with your God."},"point":"God requires justice, mercy, and humility — and will send a ruler from Bethlehem to shepherd His people.","christ":"The ruler of Israel born in Bethlehem, who shepherds His people (5:2).","chars":[{"n":"Micah","d":"the prophet who foretold Bethlehem's ruler"}]},{"name":"Nahum","author":"Nahum","summary":"A sequel to Jonah a century later: Nineveh, now unrepentant, faces certain doom. God is patient, but He will not leave the guilty forever unpunished.","verse":{"ref":"Nahum 1:7","text":"The Lord is good, a stronghold in the day of trouble."},"point":"God is patient but just; He will finally judge cruel, unrepentant oppressors.","christ":"The refuge and stronghold, whose feet bring good news of peace.","chars":[{"n":"Nahum","d":"the prophet who pronounced Nineveh's fall"},{"n":"Nineveh","d":"the Assyrian capital marked for destruction"}]},{"name":"Habakkuk","author":"Habakkuk","summary":"A prophet who dares to argue with God about injustice and why He would use wicked Babylon to judge Judah. He ends in trust and worship: “The righteous shall live by his faith.”","verse":{"ref":"Habakkuk 2:4","text":"The righteous shall live by his faith."},"point":"When God's ways are confusing, the righteous trust and worship Him no matter what.","christ":"The righteous one by whose faith we live — the ground of justification in Christ (2:4).","chars":[{"n":"Habakkuk","d":"the questioning prophet who learned to trust"}]},{"name":"Zephaniah","author":"Zephaniah","summary":"A stern warning of the coming “day of the Lord” against Judah and the surrounding nations, closing with a joyful promise that God will rejoice over a restored remnant with singing.","verse":{"ref":"Zephaniah 3:17","text":"The Lord your God is in your midst… he will rejoice over you."},"point":"The coming day of the Lord judges sin but ends in joyful restoration for a humble remnant.","christ":"The King in our midst who saves and rejoices over His people with singing (3:17).","chars":[{"n":"Zephaniah","d":"the prophet of the day of the Lord"}]},{"name":"Haggai","author":"Haggai","summary":"After the exile, Haggai rebukes the returned people for building their own paneled houses while God's temple lies in ruins, urging them to “consider your ways” and rebuild.","verse":{"ref":"Haggai 2:4","text":"Be strong… for I am with you, declares the Lord."},"point":"Put God first — rebuild His house and priorities — and He will be present and bless.","christ":"The desire of the nations, whose greater glory fills the temple (2:7).","chars":[{"n":"Haggai","d":"the prophet who spurred the temple's rebuilding"},{"n":"Zerubbabel","d":"the governor who led the work"},{"n":"Joshua","d":"the high priest of the return"}]},{"name":"Zechariah","author":"Zechariah","summary":"Visions and prophecies to encourage the temple's rebuilding, laced with Messianic pictures — the coming King entering humbly on a donkey, and the shepherd who is pierced for his people.","verse":{"ref":"Zechariah 9:9","text":"Behold, your king is coming to you… humble and mounted on a donkey."},"point":"God encourages His people to rebuild, pointing them to the humble, coming Messiah-King.","christ":"The humble King on a donkey (9:9), the pierced one (12:10), and the shepherd struck for the sheep (13:7).","chars":[{"n":"Zechariah","d":"the prophet of vivid Messianic visions"},{"n":"Zerubbabel & Joshua","d":"the governor and high priest he encouraged"}]},{"name":"Malachi","author":"Malachi","summary":"The last Old Testament word. God confronts a spiritually apathetic people over half-hearted worship and broken faith, and promises a coming messenger — Elijah — before the great day of the Lord. Then 400 years of silence follow.","verse":{"ref":"Malachi 3:1","text":"Behold, I send my messenger, and he will prepare the way before me."},"point":"God calls a lukewarm people back to faithful worship and promises a forerunner before the Messiah.","christ":"The messenger of the covenant and the sun of righteousness who rises with healing (4:2).","chars":[{"n":"Malachi","d":"the final prophet before the coming of Christ"}]}]}]},{"id":"nt","title":"New Testament","subtitle":"27 books — The coming of Christ and the birth of His church","groups":[{"name":"The Gospels","books":[{"name":"Matthew","author":"Matthew (Levi), the apostle and former tax collector","summary":"Written especially for a Jewish audience, presenting Jesus as the promised Messiah and King who fulfills Old Testament prophecy. It features the Sermon on the Mount and closes with the Great Commission.","verse":{"ref":"Matthew 28:19","text":"Go therefore and make disciples of all nations."},"point":"Jesus is the promised King-Messiah who fulfills Scripture and sends His people to the whole world.","christ":"Jesus the Messiah and King, the promised Son of David and Son of Abraham.","chars":[{"n":"Jesus","d":"revealed as the Messiah and King of the Jews"},{"n":"The twelve disciples","d":"called to follow and be sent out"},{"n":"John the Baptist","d":"prepared the way for Jesus"},{"n":"The Pharisees","d":"religious leaders who opposed Jesus"}]},{"name":"Mark","author":"John Mark, associate of the apostle Peter","summary":"The shortest, fastest-paced Gospel, portraying Jesus as the suffering Servant of action. Again and again He “immediately” heals, teaches, and moves resolutely toward the cross.","verse":{"ref":"Mark 10:45","text":"The Son of Man came not to be served but to serve."},"point":"Jesus is the powerful, active Servant-King who conquers by giving His life as a ransom.","christ":"Jesus the suffering Servant who came to give His life as a ransom.","chars":[{"n":"Jesus","d":"the powerful Servant who gave His life as a ransom"},{"n":"Peter","d":"the apostle whose eyewitness account shaped the book"},{"n":"The disciples","d":"followers who were often slow to understand"}]},{"name":"Luke","author":"Luke, the physician and companion of Paul","summary":"A careful physician's orderly account, emphasizing Jesus' compassion for the poor, outcasts, women, and sinners. It is home to the parables of the Good Samaritan and the Prodigal Son.","verse":{"ref":"Luke 19:10","text":"The Son of Man came to seek and to save the lost."},"point":"Jesus is the Savior for everyone — especially the poor, the outcast, and the overlooked.","christ":"Jesus the Son of Man, Savior for the lost, the poor, and the outcast.","chars":[{"n":"Jesus","d":"the compassionate Savior of all people"},{"n":"Mary","d":"the mother of Jesus"},{"n":"Zechariah & Elizabeth","d":"parents of John the Baptist"},{"n":"John the Baptist","d":"the forerunner of the Messiah"}]},{"name":"John","author":"John, the apostle (“the disciple whom Jesus loved”)","summary":"The most theological Gospel, presenting Jesus as the divine Word made flesh through seven signs and seven “I am” sayings. Its purpose: “that you may believe that Jesus is the Christ” and have life in His name.","verse":{"ref":"John 3:16","text":"For God so loved the world, that he gave his only Son."},"point":"Jesus is God in the flesh; believing in Him brings eternal life.","christ":"Jesus the eternal Son of God, the Word made flesh, full of grace and truth.","chars":[{"n":"Jesus","d":"the eternal Son of God who gives eternal life"},{"n":"Lazarus","d":"raised from the dead after four days"},{"n":"Thomas","d":"the doubter who confessed “My Lord and my God”"},{"n":"Mary & Martha","d":"sisters and close friends of Jesus"}]}]},{"name":"Church History","books":[{"name":"Acts","author":"Luke, the physician","summary":"The birth and explosive spread of the church after Jesus' ascension. The Spirit falls at Pentecost, and the gospel advances from Jerusalem to Rome — largely through Peter and then Paul's missionary journeys.","verse":{"ref":"Acts 1:8","text":"You will be my witnesses… to the end of the earth."},"point":"Empowered by the Spirit, the church is born and the gospel spreads unstoppably to the nations.","christ":"The ascended, reigning Christ, at work by His Spirit through the church.","chars":[{"n":"Peter","d":"led the early church and preached at Pentecost"},{"n":"Paul","d":"the former persecutor turned tireless missionary"},{"n":"Stephen","d":"the first Christian martyr"},{"n":"Barnabas","d":"an encourager and Paul's early partner"}]}]},{"name":"Paul's Letters","books":[{"name":"Romans","author":"Paul the apostle","summary":"Paul's theological masterpiece, laying out the gospel systematically: all have sinned, justification comes by faith in Christ alone, and this grace transforms how believers live and love.","verse":{"ref":"Romans 1:16","text":"I am not ashamed of the gospel… the power of God for salvation."},"point":"Everyone is saved the same way — by grace through faith in Christ — and it transforms how we live.","christ":"Christ our righteousness, in whom the ungodly are justified by faith.","chars":[{"n":"Paul","d":"the author, unfolding the logic of the gospel"},{"n":"Phoebe","d":"the deaconess who likely carried the letter to Rome"}]},{"name":"1 Corinthians","author":"Paul the apostle","summary":"Paul corrects a gifted but divided and immature church on quarrels, sexual immorality, lawsuits, worship, and spiritual gifts — and pens the timeless “love chapter” (chapter 13).","verse":{"ref":"1 Corinthians 13:13","text":"Faith, hope, and love abide… but the greatest of these is love."},"point":"A healthy church settles its divisions and exercises its gifts in the way of love.","christ":"Christ our wisdom and the risen firstfruits who guarantees our resurrection (ch. 15).","chars":[{"n":"Paul","d":"the author correcting and instructing the church"},{"n":"The Corinthian believers","d":"a divided church needing maturity"}]},{"name":"2 Corinthians","author":"Paul the apostle","summary":"Paul's most personal and emotional letter, defending his ministry and apostolic authority against critics, and boasting only in his weakness — for Christ's power is made perfect in it.","verse":{"ref":"2 Corinthians 12:9","text":"My power is made perfect in weakness."},"point":"True ministry boasts not in strength but in Christ's power revealed through human weakness.","christ":"Christ who, though rich, became poor so that we might become rich.","chars":[{"n":"Paul","d":"the author defending his ministry"},{"n":"Titus","d":"his co-worker and messenger"},{"n":"The “super-apostles”","d":"false teachers Paul opposed"}]},{"name":"Galatians","author":"Paul the apostle","summary":"A fiery defense of the gospel of grace: we are justified by faith in Christ, not by works of the Law. “For freedom Christ has set us free” — so do not return to slavery.","verse":{"ref":"Galatians 2:16","text":"A person is not justified by works of the law but through faith."},"point":"We are saved by faith in Christ alone, not law-keeping — and that gospel brings real freedom.","christ":"Christ who redeemed us from the curse of the law and set us free (3:13).","chars":[{"n":"Paul","d":"the author contending for the true gospel"},{"n":"Peter","d":"publicly corrected by Paul for hypocrisy"},{"n":"The Judaizers","d":"teachers demanding law-keeping for salvation"}]},{"name":"Ephesians","author":"Paul the apostle (from prison)","summary":"A soaring letter on God's eternal plan to unite all things in Christ and on the church as His body, followed by practical calls to walk worthily — including putting on the “whole armor of God.”","verse":{"ref":"Ephesians 2:8","text":"By grace you have been saved through faith… the gift of God."},"point":"God unites all believers into one new people in Christ, called to live worthy of that grace.","christ":"Christ the head of the church, in whom God unites all things in heaven and earth.","chars":[{"n":"Paul","d":"the imprisoned author writing to the church"}]},{"name":"Philippians","author":"Paul the apostle (from prison)","summary":"A joyful thank-you letter written from prison, urging believers to rejoice always and to imitate Christ's humility. “For to me to live is Christ, and to die is gain.”","verse":{"ref":"Philippians 4:4","text":"Rejoice in the Lord always; again I will say, rejoice."},"point":"Joy in Christ is possible in any circumstance, grounded in the humility He modeled.","christ":"Christ who humbled Himself to the cross and was exalted above every name (ch. 2).","chars":[{"n":"Paul","d":"the joyful prisoner"},{"n":"Timothy","d":"his trusted co-worker"},{"n":"Epaphroditus","d":"the messenger who nearly died serving Paul"}]},{"name":"Colossians","author":"Paul the apostle (from prison)","summary":"Paul exalts the supremacy and complete sufficiency of Christ against creeping false teaching — for in Him all the fullness of God dwells bodily, and in Him believers are complete.","verse":{"ref":"Colossians 1:18","text":"That in everything he might be preeminent."},"point":"Christ is supreme and completely sufficient; nothing needs to be added to Him.","christ":"Christ supreme — the image of the invisible God, in whom all the fullness dwells.","chars":[{"n":"Paul","d":"the author defending Christ's supremacy"},{"n":"Epaphras","d":"founder of the Colossian church"},{"n":"Tychicus","d":"the letter's carrier"}]},{"name":"1 Thessalonians","author":"Paul the apostle","summary":"Warm encouragement to a young, persecuted church to keep growing in holiness and to take comfort in the certain return of Christ, when the dead in Christ will rise.","verse":{"ref":"1 Thessalonians 4:17","text":"And so we will always be with the Lord."},"point":"Live holy and encouraged, comforted by the certain return of Christ.","christ":"Christ who will descend from heaven to gather His people to Himself.","chars":[{"n":"Paul","d":"the encouraging author"},{"n":"Timothy & Silas","d":"his companions in planting the church"}]},{"name":"2 Thessalonians","author":"Paul the apostle","summary":"A follow-up that corrects confusion about the “day of the Lord,” urging steadfastness under persecution and warning idle believers to get back to honest work.","verse":{"ref":"2 Thessalonians 3:3","text":"The Lord is faithful. He will establish and guard you."},"point":"Stand firm and keep working faithfully; Christ will surely return in His own time.","christ":"Christ who will return in blazing glory to judge and to be glorified in His saints.","chars":[{"n":"Paul","d":"the author clarifying end-times teaching"},{"n":"The Thessalonian church","d":"persecuted believers he steadied"}]},{"name":"1 Timothy","author":"Paul the apostle","summary":"A pastoral handbook to his protégé Timothy on sound doctrine, orderly worship, and the qualifications for church leaders. Guard the good deposit entrusted to you.","verse":{"ref":"1 Timothy 4:12","text":"Set the believers an example in speech, conduct, love, and faith."},"point":"Healthy churches need sound doctrine, godly leaders, and lives that match the gospel.","christ":"Christ the one mediator between God and men, who gave Himself as a ransom (2:5).","chars":[{"n":"Paul","d":"the mentor giving pastoral instruction"},{"n":"Timothy","d":"the young pastor at Ephesus"}]},{"name":"2 Timothy","author":"Paul the apostle","summary":"Paul's last letter, written as he faces execution — a moving charge to Timothy to preach the word, endure hardship, and stay faithful. “I have fought the good fight, I have finished the race.”","verse":{"ref":"2 Timothy 4:7","text":"I have fought the good fight, I have finished the race."},"point":"Whatever the cost, guard the truth and preach the Word faithfully to the very end.","christ":"Christ the righteous Judge who awards the crown to all who love His appearing (4:8).","chars":[{"n":"Paul","d":"the author facing martyrdom"},{"n":"Timothy","d":"urged to carry on the ministry"}]},{"name":"Titus","author":"Paul the apostle","summary":"Instructions to Titus for organizing the young churches on Crete — appointing qualified elders and teaching sound doctrine that produces good works and godly living.","verse":{"ref":"Titus 3:5","text":"He saved us… according to his own mercy."},"point":"Sound doctrine should always produce good works and godly, well-ordered church life.","christ":"Christ our great God and Savior, who redeems and purifies a people for Himself (2:13–14).","chars":[{"n":"Paul","d":"the author giving church-planting guidance"},{"n":"Titus","d":"his representative leading the churches on Crete"}]},{"name":"Philemon","author":"Paul the apostle","summary":"A short, personal letter appealing to Philemon to welcome back his runaway slave Onesimus — now a brother in Christ — with forgiveness rather than punishment. A gem on grace and reconciliation.","verse":{"ref":"Philemon 1:16","text":"No longer as a bondservant but… as a beloved brother."},"point":"The gospel turns even a runaway slave into a beloved brother; grace reconciles.","christ":"Christ who takes our debt upon Himself — “charge it to me” — and reconciles.","chars":[{"n":"Paul","d":"the author interceding for a runaway"},{"n":"Philemon","d":"the slave owner and church host"},{"n":"Onesimus","d":"the runaway slave, now a believer"}]}]},{"name":"The General Letters","books":[{"name":"Hebrews","author":"Anonymous (author unknown; traditionally linked to Paul)","summary":"A rich argument that Christ is superior to everything in the old covenant — angels, Moses, the priesthood, and the sacrifices. He is the better and final High Priest. Therefore hold fast and draw near by faith.","verse":{"ref":"Hebrews 12:2","text":"Looking to Jesus, the founder and perfecter of our faith."},"point":"Christ is greater than everything in the old covenant, so hold fast to Him by faith.","christ":"Christ our great High Priest, superior to angels, Moses, and every sacrifice.","chars":[{"n":"Jesus","d":"the great High Priest superior to all"},{"n":"The “hall of faith” heroes","d":"Abel, Noah, Abraham, Moses and others held up as examples (chapter 11)"}]},{"name":"James","author":"James, the brother of Jesus and leader of the Jerusalem church","summary":"Practical, punchy wisdom on living out real faith: “Faith by itself, if it does not have works, is dead.” It tames the tongue, warns the rich, and calls for patient endurance.","verse":{"ref":"James 2:17","text":"Faith by itself, if it does not have works, is dead."},"point":"Genuine faith proves itself in action — in words, in works, and in endurance.","christ":"Christ the Lord of glory, whose wisdom from above we live out day by day.","chars":[{"n":"James","d":"the author urging faith that acts"}]},{"name":"1 Peter","author":"Peter the apostle","summary":"Encouragement to suffering Christians scattered as “exiles” to stand firm, live holy, and follow Christ's example of patient suffering, fixing their hope on the glory to come.","verse":{"ref":"1 Peter 5:10","text":"The God of all grace… will himself restore, confirm, and strengthen you."},"point":"Stand firm and holy under suffering, following Christ's example and fixing hope on future glory.","christ":"Christ the unblemished Lamb, our example in suffering and our living hope.","chars":[{"n":"Peter","d":"the apostle strengthening the persecuted"},{"n":"Silvanus (Silas)","d":"who helped write and carry the letter"}]},{"name":"2 Peter","author":"Peter the apostle","summary":"A warning against false teachers and scoffers who deny Christ's return, urging believers to grow in godliness and to remember that God's promise, though delayed, is absolutely sure.","verse":{"ref":"2 Peter 3:9","text":"The Lord is not slow… not wishing that any should perish."},"point":"Beware false teachers; grow in godliness, for Christ's promised return is certain.","christ":"Christ whose promised return is certain, the morning star rising in our hearts.","chars":[{"n":"Peter","d":"the apostle warning of false teachers"}]},{"name":"1 John","author":"John, the apostle","summary":"Tests of genuine faith centered on love and truth: walk in the light, love one another, and believe that Jesus is the Son of God. “God is love,” and so His children love.","verse":{"ref":"1 John 4:8","text":"God is love."},"point":"Real faith shows itself in love for others, in obedience, and in confidence that Jesus is God's Son.","christ":"Christ our advocate with the Father and the propitiation for our sins (2:1–2).","chars":[{"n":"John","d":"the aged apostle writing of love and assurance"}]},{"name":"2 John","author":"John, the apostle (“the elder”)","summary":"A brief note urging believers to keep walking in love and truth, and to beware of deceivers who deny that Jesus came in the flesh.","verse":{"ref":"2 John 1:6","text":"This is love, that we walk according to his commandments."},"point":"Walk in both love and truth, and refuse teachers who deny Christ.","christ":"Christ come in the flesh — the truth in which we are called to walk.","chars":[{"n":"John","d":"the elder writing a warm warning"},{"n":"“The elect lady”","d":"the church (or woman) he addresses"}]},{"name":"3 John","author":"John, the apostle (“the elder”)","summary":"A personal note praising the hospitable Gaius, rebuking the domineering Diotrephes who rejects visitors, and commending the well-spoken-of Demetrius.","verse":{"ref":"3 John 1:11","text":"Whoever does good is from God."},"point":"Support faithful gospel workers with hospitality, and reject pride and control in the church.","christ":"Christ, “the Name,” for whose sake His servants go out into the world (v. 7).","chars":[{"n":"Gaius","d":"commended for his hospitality"},{"n":"Diotrephes","d":"rebuked for arrogance and control"},{"n":"Demetrius","d":"praised for his good testimony"}]},{"name":"Jude","author":"Jude, the brother of James and of Jesus","summary":"A vigorous call to “contend for the faith” against false teachers who twist God's grace into a license for sin, closing with a magnificent doxology to the God who keeps us from stumbling.","verse":{"ref":"Jude 1:3","text":"Contend for the faith once for all delivered to the saints."},"point":"Defend the true faith against those who twist grace into a license to sin.","christ":"Christ who is able to keep us from stumbling and present us blameless with great joy.","chars":[{"n":"Jude","d":"the author urging defense of the faith"}]}]},{"name":"Prophecy","books":[{"name":"Revelation","author":"John, the apostle (from exile on Patmos)","summary":"Apocalyptic visions unveiling Christ's ultimate victory over evil through cosmic conflict, judgment, and the final triumph — ending with a new heaven and new earth where God dwells forever with His people. “Behold, I am making all things new.”","verse":{"ref":"Revelation 21:5","text":"Behold, I am making all things new."},"point":"Jesus wins: evil is judged, and God dwells forever with His people in a renewed creation.","christ":"Christ the victorious Lamb and returning King, the Alpha and the Omega, who makes all things new.","chars":[{"n":"Jesus","d":"the victorious Lamb and returning King"},{"n":"John","d":"the exiled apostle who received the visions"},{"n":"The seven churches","d":"congregations addressed with praise and warning"},{"n":"The dragon","d":"Satan, defeated at the end"}]}]}]}],"timeline":[{"date":"Before c. 2000 BC","era":"Primeval History","desc":"Genesis 1–11 — creation, the fall, the flood, and the tower of Babel."},{"date":"c. 2000–1700 BC","era":"The Patriarchs","desc":"Genesis 12–50 — Abraham, Isaac, Jacob, and Joseph; the family of promise moves to Egypt. Job is also set in this era."},{"date":"c. 1500–1400 BC","era":"Exodus & Wilderness","desc":"Exodus, Leviticus, Numbers, Deuteronomy — rescue from Egypt, the Law at Sinai, and forty years of wandering. (Some scholars date the Exodus later, c. 1300–1250 BC.)"},{"date":"c. 1400–1050 BC","era":"Conquest & Judges","desc":"Joshua — entering and conquering Canaan. Judges and Ruth — the cycle of sin and deliverers, and Ruth's quiet redemption."},{"date":"c. 1050–930 BC","era":"The United Kingdom","desc":"1 & 2 Samuel, 1 Kings 1–11, 1 Chronicles, 2 Chronicles 1–9 — Saul, David, and Solomon; the temple is built. Psalms, Proverbs, Ecclesiastes, and Song of Solomon come largely from David and Solomon."},{"date":"c. 930–586 BC","era":"The Divided Kingdom","desc":"1 Kings 12 – 2 Kings and 2 Chronicles 10–36 — Israel (north) and Judah (south) drift into idolatry. Most prophets preach in this era: Isaiah, Jeremiah, Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, and Zephaniah."},{"date":"586–539 BC","era":"The Exile","desc":"2 Kings 25 and Lamentations — Jerusalem falls and is mourned. Ezekiel and Daniel prophesy among the exiles in Babylon."},{"date":"539–430 BC","era":"The Return","desc":"Ezra and Nehemiah — rebuilding the temple and the walls. Esther — God's providence protecting Jews still in Persia. Haggai, Zechariah, and Malachi — the post-exile prophets; Malachi closes the Old Testament."},{"date":"c. 430–4 BC","era":"The 400 Silent Years","desc":"No Scripture is written during this gap between the Testaments; the stage is set for the coming of the Messiah."},{"date":"c. 4 BC – AD 30","era":"The Life of Christ","desc":"Matthew, Mark, Luke, and John — the birth, ministry, death, and resurrection of Jesus."},{"date":"c. AD 30–62","era":"The Early Church","desc":"Acts — the church is born at Pentecost and spreads from Jerusalem to Rome."},{"date":"c. AD 48–68","era":"Paul's Letters","desc":"Galatians, 1–2 Thessalonians, 1–2 Corinthians, and Romans, then the prison letters (Ephesians, Philippians, Colossians, Philemon) and the pastoral letters (1–2 Timothy, Titus)."},{"date":"c. AD 45–90","era":"The General Letters","desc":"James, Hebrews, 1–2 Peter, 1–2–3 John, and Jude — written to encourage and warn scattered believers."},{"date":"c. AD 95","era":"Prophecy","desc":"Revelation — John's visions of Christ's victory and the new creation close the New Testament."}]};
+
+/* ---------- persistence (safe) ---------- */
+const store = {
+  get(k,f){ try{ const v=localStorage.getItem('bbb.'+k); return v==null?f:JSON.parse(v);}catch(e){return f;} },
+  set(k,v){ try{ localStorage.setItem('bbb.'+k, JSON.stringify(v)); }catch(e){} }
+};
+let read  = new Set(store.get('read',  []));
+let saved = new Set(store.get('saved', []));
+let openGroups = new Set(store.get('groups', []));
+let view   = store.get('view','books');
+let filter = store.get('filter','all');
+let lastBook = store.get('lastBook', null);
+const saveState = ()=>{ store.set('read',[...read]); store.set('saved',[...saved]);
+  store.set('groups',[...openGroups]); store.set('view',view); store.set('filter',filter); store.set('lastBook',lastBook); };
+
+const TOTAL = DATA.testaments.reduce((a,t)=>a+t.groups.reduce((b,g)=>b+g.books.length,0),0);
+const allBooks = [];
+DATA.testaments.forEach(t=>t.groups.forEach(g=>g.books.forEach(b=>allBooks.push(Object.assign({_t:t.id,_g:g.name},b)))));
+const bookIndex = Object.fromEntries(allBooks.map((b,i)=>[b.name,i]));
+
+/* ---------- helpers ---------- */
+const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $ = s => document.querySelector(s);
+
+function updateProgress(){
+  const n = read.size;
+  $('#barFill').style.width = (n/TOTAL*100)+'%';
+  $('#progText').textContent = n+' of '+TOTAL+' read';
+}
+
+/* ---------- book detail markup ---------- */
+function detailHTML(b){
+  const chars = b.chars.map(c=>`<li><b>${esc(c.n)}</b> — ${esc(c.d)}.</li>`).join('');
+  const isRead = read.has(b.name), isSaved = saved.has(b.name);
+  const i = bookIndex[b.name];
+  const prev = allBooks[i-1], next = allBooks[i+1];
+  return `<div class="bpad">
+    <p class="author"><b>Author:</b> ${esc(b.author)}</p>
+    <p class="summary">${esc(b.summary)}</p>
+    <div class="verse"><span class="q">&ldquo;${esc(b.verse.text)}&rdquo;</span><span class="ref">${esc(b.verse.ref)}</span></div>
+    <div class="block"><p class="lab">Key point</p><p>${esc(b.point)}</p></div>
+    <div class="block"><p class="lab">Christ in this book</p><p>${esc(b.christ)}</p></div>
+    <p class="lab">Primary characters</p>
+    <ul class="chars">${chars}</ul>
+    <div class="actions">
+      <button class="mark ${isRead?'act':''}" data-book="${esc(b.name)}">${isRead?'&#10003; Read':'Mark as read'}</button>
+      <button class="save ${isSaved?'act':''}" data-book="${esc(b.name)}">${isSaved?'&#9873; Saved':'&#9872; Save'}</button>
+    </div>
+    <div class="navbtns">
+      <button class="jump" data-to="${prev?esc(prev.name):''}" ${prev?'':'disabled'}>&#8249; ${prev?esc(prev.name):''}</button>
+      <button class="jump" data-to="${next?esc(next.name):''}" ${next?'':'disabled'}>${next?esc(next.name):''} &#8250;</button>
+    </div>
+  </div>`;
+}
+
+function bookRow(b){
+  const isRead = read.has(b.name), isSaved = saved.has(b.name);
+  return `<div class="book ${isRead?'read':''}" data-name="${esc(b.name)}">
+    <button class="brow">
+      <span class="bname">${esc(b.name)}</span>
+      ${isSaved?'<span class="badge rib">&#9873;</span>':''}
+      ${isRead?'<span class="badge rd">&#10003;</span>':''}
+      <span class="chev">&#9656;</span>
+    </button>
+    <div class="bdetail">${detailHTML(b)}</div>
+  </div>`;
+}
+
+/* ---------- render books view ---------- */
+function groupDone(g){ return g.books.every(b=>read.has(b.name)); }
+
+function renderBooks(){
+  const q = ($('#q').value||'').trim().toLowerCase();
+  const host = $('#view-books');
+
+  // filtered flat search
+  if(q){
+    const hits = allBooks.filter(b=>{
+      if(filter==='ot'&&b._t!=='ot')return false;
+      if(filter==='nt'&&b._t!=='nt')return false;
+      if(filter==='saved'&&!saved.has(b.name))return false;
+      if(filter==='unread'&&read.has(b.name))return false;
+      const hay = (b.name+' '+b.author+' '+b.summary+' '+b.point+' '+b.christ+' '+b.chars.map(c=>c.n+' '+c.d).join(' ')).toLowerCase();
+      return hay.includes(q);
+    });
+    host.innerHTML = hits.length
+      ? `<div class="tlabel">Results (${hits.length})</div>` + hits.map(bookRow).join('')
+      : `<div class="empty"><div class="big">No matches</div>Try a name like &ldquo;David,&rdquo; a book, or a theme.</div>`;
+    wireBooks();
+    return;
+  }
+
+  let html='';
+  DATA.testaments.forEach(t=>{
+    if(filter==='ot'&&t.id!=='ot')return;
+    if(filter==='nt'&&t.id!=='nt')return;
+    let tHTML='';
+    t.groups.forEach(g=>{
+      let books = g.books;
+      if(filter==='saved') books = books.filter(b=>saved.has(b.name));
+      if(filter==='unread')books = books.filter(b=>!read.has(b.name));
+      if(!books.length) return;
+      const gid = t.id+'::'+g.name;
+      const isOpen = openGroups.has(gid);
+      const rc = g.books.filter(b=>read.has(b.name)).length;
+      tHTML += `<div class="group ${isOpen?'open':''} ${groupDone(g)?'done':''}" data-gid="${esc(gid)}">
+        <button class="ghead">
+          <span class="gdot"></span>
+          <span class="gname">${esc(g.name)}</span>
+          <span class="gmeta">${rc}/${g.books.length}</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="gbody">${books.map(bookRow).join('')}</div>
+      </div>`;
+    });
+    if(tHTML){
+      html += `<div class="tlabel">${esc(t.title)}</div><div class="tsub">${esc(t.subtitle)}</div>`+tHTML;
+    }
+  });
+  host.innerHTML = html || `<div class="empty"><div class="big">Nothing here yet</div>${filter==='saved'?'Save a book with the ribbon to see it here.':'No unread books — well done.'}</div>`;
+  wireBooks();
+}
+
+/* ---------- interactions ---------- */
+function openBook(el){
+  document.querySelectorAll('.book.open').forEach(o=>{ if(o!==el) o.classList.remove('open'); });
+  const willOpen = !el.classList.contains('open');
+  el.classList.toggle('open', willOpen);
+  if(willOpen){
+    lastBook = el.dataset.name; saveState();
+    setTimeout(()=>{ el.scrollIntoView({behavior:'smooth',block:'start'}); },60);
+  }
+}
+
+function wireBooks(){
+  document.querySelectorAll('.group .ghead').forEach(h=>{
+    h.onclick=()=>{ const g=h.closest('.group'); const gid=g.dataset.gid;
+      g.classList.toggle('open');
+      if(g.classList.contains('open')) openGroups.add(gid); else openGroups.delete(gid);
+      saveState(); };
+  });
+  document.querySelectorAll('.book .brow').forEach(r=>{
+    r.onclick=()=>openBook(r.closest('.book'));
+  });
+  document.querySelectorAll('.mark').forEach(btn=>{
+    btn.onclick=e=>{ e.stopPropagation(); const n=btn.dataset.book;
+      if(read.has(n))read.delete(n); else read.add(n);
+      saveState(); updateProgress(); refreshBook(n); };
+  });
+  document.querySelectorAll('.save').forEach(btn=>{
+    btn.onclick=e=>{ e.stopPropagation(); const n=btn.dataset.book;
+      if(saved.has(n))saved.delete(n); else saved.add(n);
+      saveState(); refreshBook(n); };
+  });
+  document.querySelectorAll('.jump').forEach(btn=>{
+    btn.onclick=e=>{ e.stopPropagation(); const to=btn.dataset.to; if(to) goToBook(to); };
+  });
+}
+
+// re-render a single open book's row (keep it open) after read/save toggle
+function refreshBook(name){
+  const el = document.querySelector('.book[data-name="'+cssq(name)+'"]');
+  if(!el) { renderBooks(); return; }
+  const b = allBooks[bookIndex[name]];
+  const wasOpen = el.classList.contains('open');
+  el.className = 'book '+(read.has(name)?'read ':'')+(wasOpen?'open':'');
+  el.querySelector('.brow').outerHTML = bookRow(b).match(/<button class="brow">[\s\S]*?<\/button>/)[0];
+  el.querySelector('.bdetail').innerHTML = detailHTML(b);
+  // update group meta/dot
+  document.querySelectorAll('.group').forEach(g=>{
+    const gid=g.dataset.gid; if(!gid) return;
+    const grp = DATA.testaments.flatMap(t=>t.groups.map(x=>({id:t.id+'::'+x.name,g:x}))).find(o=>o.id===gid);
+    if(grp){ const rc=grp.g.books.filter(x=>read.has(x.name)).length;
+      const meta=g.querySelector('.gmeta'); if(meta)meta.textContent=rc+'/'+grp.g.books.length;
+      g.classList.toggle('done', grp.g.books.every(x=>read.has(x.name))); }
+  });
+  wireBooks();
+}
+function cssq(s){ return s.replace(/"/g,'\\"'); }
+
+function goToBook(name){
+  const b = allBooks[bookIndex[name]];
+  if(view!=='books'){ setView('books'); }
+  $('#q').value=''; $('#searchRow').classList.remove('has');
+  // ensure its group is open
+  openGroups.add(b._t+'::'+b._g); saveState();
+  renderBooks();
+  const el = document.querySelector('.book[data-name="'+cssq(name)+'"]');
+  if(el){ openBook(el); }
+}
+
+/* ---------- timeline & about ---------- */
+function renderTimeline(){
+  const eras = DATA.timeline.map(e=>`<div class="era"><div class="d">${esc(e.date)}</div><div class="e">${esc(e.era)}</div><p class="x">${esc(e.desc)}</p></div>`).join('');
+  $('#view-timeline').innerHTML =
+    `<div class="tlabel">A Timeline of the Bible</div>
+     <p class="tlintro">Where each book falls in the storyline of Scripture. Dates are approximate, and some — especially the Exodus — are debated.</p>
+     <div class="tl">${eras}</div>`;
+}
+function renderAbout(){
+  $('#view-about').innerHTML = `<div class="about">
+    <div class="tip"><b>Add to your Home Screen</b><p>Tap the Share button in Safari, then <b>Add to Home Screen</b>. It opens full-screen like an app and works offline.</p></div>
+    <div class="stat"><b id="aboutStat"></b><p style="margin:4px 0 0;font-size:12.5px;color:var(--muted)">Your reading progress and saved books are kept on this device.</p></div>
+    <h2>A note on authorship</h2>
+    <p>Each book lists the author most commonly named by Christian tradition, the framing used by study Bibles such as the ESV. Some books name their author directly; others are anonymous, and the name given is a long-standing tradition — Moses for the first five books, Samuel for Judges and Ruth, Jeremiah for Kings.</p>
+    <p>A few books are genuinely unknown in authorship — Job and Hebrews are the clearest — and are labeled that way. Where scholars dispute the traditional view (as with parts of Isaiah or the dating of Daniel), the traditional attribution is given as primary. Each key verse is a short, memorable line quoted only in part.</p>
+    <button class="reset" id="resetBtn">Reset reading progress &amp; saved books</button>
+  </div>`;
+  $('#aboutStat').textContent = read.size+' of '+TOTAL+' books read · '+saved.size+' saved';
+  $('#resetBtn').onclick=()=>{ if(confirm('Clear all reading progress and saved books on this device?')){
+    read.clear(); saved.clear(); lastBook=null; saveState(); updateProgress(); renderAbout(); }};
+}
+
+/* ---------- view + filter switching ---------- */
+function setView(v){
+  view=v; saveState();
+  document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on',b.dataset.view===v));
+  $('#view-books').hidden = v!=='books';
+  $('#view-timeline').hidden = v!=='timeline';
+  $('#view-about').hidden = v!=='about';
+  $('#searchRow').style.display = v==='books'?'':'none';
+  $('#chips').style.display = v==='books'?'':'none';
+  if(v==='timeline')renderTimeline();
+  if(v==='about')renderAbout();
+}
+$('#seg').onclick = e=>{ const b=e.target.closest('button'); if(b) setView(b.dataset.view); };
+$('#chips').onclick = e=>{ const b=e.target.closest('button'); if(!b)return;
+  filter=b.dataset.filter; saveState();
+  document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on',x===b));
+  renderBooks(); };
+
+let sd;
+$('#q').addEventListener('input',()=>{ $('#searchRow').classList.toggle('has', !!$('#q').value);
+  clearTimeout(sd); sd=setTimeout(renderBooks,120); });
+$('#clr').onclick=()=>{ $('#q').value=''; $('#searchRow').classList.remove('has'); renderBooks(); $('#q').focus(); };
+
+/* ---------- boot ---------- */
+document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on',x.dataset.filter===filter));
+updateProgress();
+renderBooks();
+setView(view);
+if(view==='books' && lastBook && bookIndex[lastBook]!=null){
+  const b=allBooks[bookIndex[lastBook]]; openGroups.add(b._t+'::'+b._g);
+  renderBooks();
+  const el=document.querySelector('.book[data-name="'+cssq(lastBook)+'"]');
+  if(el) el.classList.add('open');
+}
+
+/* PWA manifest built in-memory so the file stays self-contained/offline */
+try{
+  const man = { name:"Book by Book — Bible", short_name:"Book by Book", display:"standalone",
+    background_color:"#22201C", theme_color:"#22201C", start_url:".",
+    icons:[ {src:"data:image/png;base64,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",sizes:"192x192",type:"image/png",purpose:"any maskable"},
+            {src:"data:image/png;base64,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",sizes:"512x512",type:"image/png",purpose:"any maskable"} ] };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(man)],{type:"application/manifest+json"}));
+  const l=document.createElement('link'); l.rel='manifest'; l.href=url; document.head.appendChild(l);
+}catch(e){}
+</script>
+</body>
+</html>
